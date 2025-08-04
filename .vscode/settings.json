@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./managers",
+        "./gui"
+    ]
+}
