@@ -2,19 +2,7 @@
     {
         "name": "Đào Trọng Nguyên Vũ",
         "day_of_birth": "30/08/2005",
-        "email": "NguyenVu123@gmail.com",
-        "password": "97f1f6646d3bc253d3101228bb4f62e1a1514b53ea3ef2bef9154ddc0e6518a6"
-    },
-    {
-        "name": "Nguyễn Hữu Khương",
-        "day_of_birth": "01/01/2000",
-        "email": "HuuKhuong123@gmail.com",
-        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92"
-    },
-    {
-        "name": "Nguyễn Văn A",
-        "day_of_birth": "01/02/2003",
-        "email": "VanA123@gmail.com",
-        "password": "90b5896cad5072a157ee3d8c18286dd380e6ec57091f34bd92cc1695ffeef9fc"
+        "email": "NguyenVu3025@gmail.com",
+        "password": "9a1696e1ecb98f76f9145c3c096fe186ee6fd842bb81ab8df257264dada1ba50" 
     }
 ]

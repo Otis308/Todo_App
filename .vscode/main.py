@@ -1,4 +1,7 @@
 import tkinter as tk
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from gui.GUI_Login import LoginFrame
 from gui.GUI_Register import RegisterFrame
 
@@ -7,19 +10,13 @@ class MainApp(tk.Tk):
         super().__init__()
         self.title("NOTION")
         self.geometry("1000x780+270+20")
+        self.resizable(False, False)
         self.configure(bg='white')
 
-        # Cấu hình grid cho root
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-
-        # Container dùng grid
         self.container = tk.Frame(self, bg='white')
-        self.container.grid(row=0, column=0, sticky="nsew")
+        self.container.pack(fill='both', expand=True)
 
-        # Cấu hình grid cho container
-        self.container.grid_rowconfigure(0, weight=1)
-        self.container.grid_columnconfigure(0, weight=1)
+
 
         self.frames = {}
         for F in (LoginFrame, RegisterFrame):
@@ -28,11 +25,10 @@ class MainApp(tk.Tk):
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(LoginFrame)
-        
+
     def show_frame(self, cont):
         self.frames[cont].tkraise()
-
-
+    
 if __name__ == "__main__":
     app = MainApp()
     app.mainloop()
