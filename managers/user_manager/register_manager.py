@@ -1,20 +1,17 @@
 #---REGISTER---
-import re, hashlib, datetime, json
+import re, datetime, json
 import tkinter.messagebox as mb
 
 USER_FILE = 'data/user.json'
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
 
-def cal_age(date_of_birth):
-    try:
-        bd = datetime.strptime(date_of_birth, "%d/%m/%Y")
-        today = datetime.today()
-        age = today.year - bd.year
-        return age
-    except ValueError:
-        return -1
+def check_phone_number(phone_number):
+    pattern = '^(032|033|034|035|036|037|038|039|096|097|098|086|083|084|085|081|082|088|091|094|070|079|077|076|078|090|093|089|056|058|092|059|099)[0-9]{7}$'
+    result = re.match(pattern, phone_number)
+    if result:
+        print("Số điện thoại hợp lệ.")
+    else:
+        print("Số điện thoại không hợp lệ.")
 
 def load_users():
     try:
@@ -39,3 +36,11 @@ def add_user(user_data):
     users = load_users()
     users.append(user_data)
     save_users(users) 
+    
+def _toggle_password(password_entry, button_show):
+    if password_entry.cget('show') == '':
+        password_entry.config(show='*')
+        button_show.config(text='👁')
+    else:
+        password_entry.config(show='')
+        button_show.config(text='🙈' )

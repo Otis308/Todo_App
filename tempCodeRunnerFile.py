@@ -1,2 +1,1 @@
-def show_frame(self, cont):
-        self.frames[cont].tkraise()
+from gui.GUI_Tasks import TaskManagerApp
