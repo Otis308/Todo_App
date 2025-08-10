@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.messagebox as mb
 from tkinter import font
 from PIL import Image, ImageTk
-from managers.user_manager.register_manager import load_users, save_users, check_phone_number, check_email_register, email_exits, _toggle_password
+from managers.register_manager import load_users, save_users, check_phone_number, check_email_register, email_exits, _toggle_password
 
 class RegisterFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -54,7 +54,7 @@ class RegisterFrame(tk.Frame):
 
         pw_frame = tk.Frame(main_frame, bg='white')
         pw_frame.grid(row=current_row, column=1, padx=(10, 0), pady=8, sticky='w')
-        self.password_entry = tk.Entry(pw_frame, width=22, font=(roboto_font, 11), show="*")
+        self.password_entry = tk.Entry(pw_frame, width=22, font=(roboto_font, 11), show="*", relief='solid')
         self.password_entry.pack(side=tk.LEFT)
         self.show_password_btn = tk.Button(
             pw_frame, text="👁", width=3, command=self._toggle_password,
@@ -68,7 +68,7 @@ class RegisterFrame(tk.Frame):
 
         retry_pw_frame = tk.Frame(main_frame, bg='white')
         retry_pw_frame.grid(row=current_row, column=1, padx=(10, 0), pady=8, sticky='w')
-        self.retry_password_entry = tk.Entry(retry_pw_frame, width=22, font=(roboto_font, 11), show="*")
+        self.retry_password_entry = tk.Entry(retry_pw_frame, width=22, font=(roboto_font, 11), show="*", relief='solid')
         self.retry_password_entry.pack(side=tk.LEFT)
         self.show_retry_password_btn = tk.Button(
             retry_pw_frame, text="👁", width=3, command=self._toggle_retry_password,
@@ -97,7 +97,7 @@ class RegisterFrame(tk.Frame):
         label = tk.Label(parent_frame, text=text, font=(roboto_font, 14), bg='white', anchor='e')
         label.grid(row=row, column=0, padx=(0, 10), pady=8, sticky='e')
         
-        entry = tk.Entry(parent_frame, width=25, font=("Times New Roman", 11), show=show)
+        entry = tk.Entry(parent_frame, width=25, font=("Times New Roman", 11), show=show, relief='solid')
         entry.grid(row=row, column=1, padx=(10, 0), pady=8, sticky='w')
         
         return entry

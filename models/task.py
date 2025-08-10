@@ -1,71 +1,57 @@
+from tkinter import *
+import uuid, os
 from datetime import datetime
+class User:
+    """User class to handle user authentication and data"""
+    def __init__(self, username):
+        self.username = username
+        self.data_dir = os.path.join("data", "users", username)
+        self.task_file = os.path.join(self.data_dir, "tasks.json")
+        self.ensure_directory()
+    
+    def ensure_directory(self):
+        """Ensure user directory exists"""
+        os.makedirs(self.data_dir, exist_ok=True)
+    
+    def get_task_file_path(self):
+        """Get path to user's task file"""
+        return self.task_file
 
-class task:
-    def __init__(self, id, title, description, created_at, due_date, status, owner):
-        self.__id = id
-        self.__title = title
-        self.__description = description
-        self.__created_at = created_at
-        self.__due_date = due_date
-        self.__status = status
-        self.__owner = owner
-
-    def get_id(self):
-        return self.__id
-    def set_id(self, value):
-        if (value >=  0):
-            self.__id = value
-        else: 
-            print("Error!")
-    def __repr__(self):
-        return f"<Task {self.get_id()}: {self.__title} - {'Done' if self.__completed else 'Pending'}>"
+class Task:
+    def __init__(self, title="", description="", due="", priority=2, status="Đang chờ", task_id=None):
+        self.id = task_id or str(uuid.uuid4())
+        self.title = title
+        self.description = description
+        self.due = due
+        self.priority = priority
+        self.status = status
+        self.completed = (status == "Hoàn thành")
+        self.created_at = datetime.now().isoformat()
     
-    def get_title(self):
-        return self.__title
-    def set_title(self, value):
-        self.__title = value
+    def to_dict(self):
+        """Convert task to dictionary"""
+        return {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "due": self.due,
+            "priority": self.priority,
+            "status": self.status,
+            "completed": self.completed,
+            "created_at": self.created_at
+        }
     
-    def get_decription(self):
-        return self.__description
-    def set_decription(self, value):
-        self.__description = value
-    
-    def get_create_at(self):
-        return self.__created_at
-    def set_create_at(self, value):
-        self.__created_at = value
-    
-    def get_due_date(self):
-        return self.__due_date
-    def set_due_date(self, value):
-        self.__due_date = value
-    
-    def get_status(self):
-        return self.__status
-    def set_status(self, value):
-        self.__status = value
-    
-    def get_own(self):
-        return self.__owner
-    def set_own(self, value):
-        self.__owner = value
-
-    def input_info(self):
-        self.__title       = input("Enter task title: ") 
-        self.__description = input("Enter task description: ") 
-        self.__due_date    = input("Enter due date (YYYY-MM-DD): ")
-        self.__status      = input("Enter task status (Done, Wip, Pen): ")
-        self.__owner       = input("Enter task owner: ") 
-    
-    def show_info(self):
-        print(f"*** TASK {self.__id} ***")
-        print(f"Title: {self.__title}")
-        print(f"Description: {self.__description}")
-        self.__created_at = datetime.now()
-        print(f"Creation date: {self.__created_at}")
-        print(f"Due date: {self.__due_date}")
-        print(f"Status: {self.__status}")
-        print(f"Owner: {self.__owner}")
-
-
-    
+    @classmethod
+    def from_dict(cls, data):
+        """Create task from dictionary"""
+        task = cls(
+            title=data.get("title", ""),
+            description=data.get("description", ""),
+            due=data.get("due", ""),
+            priority=data.get("priority", 2),
+            status=data.get("status", "Đang chờ"),
+            task_id=data.get("id")
+        )
+        task.completed = data.get("completed", False)
+        task.created_at = data.get("created_at", datetime.now().isoformat())
+        return task

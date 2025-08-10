@@ -1,6 +1,6 @@
 
 import tkinter as tk
-from tkinter import ttk, messagebox, simpledialog
+from tkinter import *
 from datetime import datetime
 import json, uuid, os
 

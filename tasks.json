@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Lập trình Python",
+    "created_date": "29-08-2025",
+    "priority": "1",
+    "status": "Hoàn thành"
+  },
+  {
+    "title": "Lập trình AI",
+    "created_date": "30-08-2025",
+    "priority": "2",
+    "status": "Đang chờ"
+  },
+  {
+    "title": "Báo mật CSDL",
+    "created_date": "20-09-2025",
+    "priority": "3",
+    "status": "Đang tiến hành"
+  }
+]

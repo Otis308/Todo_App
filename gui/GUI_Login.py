@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import font
 from PIL import Image, ImageTk
 import tkinter.messagebox as mb
-from managers.user_manager.login_manager import check_email_login, check_password, login_action_manager, _open_register
+from managers.login_manager import check_email_login, check_password, login_action_manager, _open_register
 
 class LoginFrame(tk.Frame):
 
@@ -43,7 +43,7 @@ class LoginFrame(tk.Frame):
         email_label = tk.Label(main_frame, text="Email:", font=(roboto_font, 16), bg='white', anchor='e')
         email_label.grid(row=3, column=0, padx=(0, 10), pady=15, sticky='e')
         
-        self.email_entry = tk.Entry(main_frame, width=25, font=(roboto_font, 12))
+        self.email_entry = tk.Entry(main_frame, width=25, font=(roboto_font, 12), relief='solid')
         self.email_entry.grid(row=3, column=1, padx=(10, 0), pady=15, sticky='w')
 
         password_label = tk.Label(main_frame, text="Mật khẩu:", font=(roboto_font, 16), bg='white', anchor='e')
@@ -52,7 +52,7 @@ class LoginFrame(tk.Frame):
         password_frame = tk.Frame(main_frame, bg='white')
         password_frame.grid(row=4, column=1, padx=(10, 0), pady=15, sticky='w')
         
-        self.password_entry = tk.Entry(password_frame, width=25, font=(roboto_font, 12), show="*")
+        self.password_entry = tk.Entry(password_frame, width=25, font=(roboto_font, 12), show="*", relief='solid')
         self.password_entry.pack(side=tk.LEFT)
 
         login_btn = tk.Button(main_frame, text="Đăng nhập", command=self._login_action, 
