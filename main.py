@@ -30,7 +30,6 @@ class MainApp(tk.Tk):
     def show_frame(self, cont):
         self.frames[cont].tkraise()
 
-
 if __name__ == "__main__":
     app = MainApp()
     app.mainloop()
