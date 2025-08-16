@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cb883956-39d2-4235-9df4-4d01870519ed",
+    "title": "Lập trình Python",
+    "description": "Nộp đồ án TodoList",
+    "due": "29-08-2025",
+    "priority": 1,
+    "status": "Hoàn thành",
+    "completed": true,
+    "created_at": "2025-08-10T13:53:38.815292"
+  },
+  {
+    "id": "6eb78ef9-cedb-4ada-9fdf-6b1379987517",
+    "title": "Lập trình AI",
+    "description": "Làm đồ án AI, sử dụng AI để phân tích",
+    "due": "30-08-2025",
+    "priority": 2,
+    "status": "Đang chờ",
+    "completed": false,
+    "created_at": "2025-08-10T13:54:31.871590"
+  },
+  {
+    "id": "17380776-5c04-4fc1-822e-c03d17fa1ae0",
+    "title": "Bảo mật CSDL",
+    "description": "Tìm hiểu về các thuật toán bảo vệ cơ sở dữ liệu",
+    "due": "20-09-2025",
+    "priority": 3,
+    "status": "Đang tiến hành",
+    "completed": false,
+    "created_at": "2025-08-10T13:55:05.714297"
+  }
+]
