@@ -4,7 +4,6 @@ from src.models.user import User
 class AuthService:
     EMAIL_PATTERN = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     PHONE_PATTERN = r'^(032|033|034|035|036|037|038|039|096|097|098|086|083|084|085|081|082|088|091|094|070|079|077|076|078|090|093|089|056|058|092|059|099)[0-9]{7}$'
-    PASSWORD_PATTERN = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%.*#?&])[A-Za-z\d@$!#.%*?&]{6,}$'
 
 
 
@@ -42,13 +41,6 @@ class AuthService:
         # 4. Kiểm tra định dạng số điện thoại
         if not re.match(self.PHONE_PATTERN, phone):
             return False, "Số điện thoại không hợp lệ"
-
-        # 5. Kiểm tra định dạng mật khẩu
-        if not re.match(self.PASSWORD_PATTERN, password):
-            return False, (
-                "Mật khẩu phải có 6-20 ký tự, chứa ít nhất 1 chữ hoa, "
-                "1 chữ thường, 1 số và 1 ký tự đặc biệt"
-            )
 
         # 6. Kiểm tra email đã tồn tại
         if self.user_repo.get_user_by_email(email):

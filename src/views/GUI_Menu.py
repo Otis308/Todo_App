@@ -3,7 +3,7 @@ import tkinter.messagebox as mb
 from tkinter import filedialog, END
 import json
 
-class EditorFrame(tk.Frame):
+class MenuFrame(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg="white")
         self.controller = controller
@@ -53,3 +53,5 @@ class EditorFrame(tk.Frame):
                 mb.showinfo("Thành công", f"Đã lưu dữ liệu ra {filename}")
             except Exception as e:
                 mb.showerror("Lỗi", f"Không thể lưu dữ liệu: {str(e)}")
+
+                
