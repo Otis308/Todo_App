@@ -1,10 +1,11 @@
+# main.py
 import tkinter as tk
-from gui.GUI_Login import LoginFrame
-from gui.GUI_Register import RegisterFrame
-from gui.GUI_Tasks import TaskManagerApp
-from gui.GUI_Home import HomeFrame
-from gui.GUI_Editor import EditorFrame
-from managers.menu_manager import create_menu
+from src.views.GUI_Login import LoginFrame
+from src.views.GUI_Register import RegisterFrame
+from src.views.GUI_Tasks import TaskManagerApp
+from src.views.GUI_Menu import MenuFrame
+from src.controllers.menu_manager import create_menu
+
 
 class MainApp(tk.Tk):
     def __init__(self):
@@ -12,34 +13,33 @@ class MainApp(tk.Tk):
         self.title("NOTION")
         self.geometry("1000x780+270+20")
         self.configure(bg='white')
+        
+        self.current_user_email = None  
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
         self.container = tk.Frame(self)
         self.container.grid(row=0, column=0, sticky="nsew")
-
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
 
+        # Tạo các frame
         self.frames = {}
-        for F in (LoginFrame, RegisterFrame, TaskManagerApp):
+        for F in (LoginFrame, RegisterFrame, TaskManagerApp, MenuFrame):
             frame = F(parent=self.container, controller=self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        for F in (HomeFrame, EditorFrame):
-            frame = F(parent=self.container, controller=self)
-            self.frames[F] = frame
-            frame.grid(row=1, column=0, sticky="nsew")
-        
         create_menu(self, self.frames, self.show_frame)
 
-        self.show_frame(HomeFrame)
+        self.show_frame(MenuFrame)
         self.show_frame(TaskManagerApp)
-        
+
     def show_frame(self, cont):
-        self.frames[cont].tkraise()
+        frame = self.frames.get(cont)
+        if frame:
+            frame.tkraise()
 
 if __name__ == "__main__":
     app = MainApp()
