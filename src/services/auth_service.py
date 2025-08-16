@@ -1,11 +1,9 @@
 import re
-from src.models.user import User
+from src.models.user_model import User
 
 class AuthService:
     EMAIL_PATTERN = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     PHONE_PATTERN = r'^(032|033|034|035|036|037|038|039|096|097|098|086|083|084|085|081|082|088|091|094|070|079|077|076|078|090|093|089|056|058|092|059|099)[0-9]{7}$'
-
-
 
     def __init__(self, user_repo):
         self.user_repo = user_repo

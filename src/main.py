@@ -34,7 +34,7 @@ class MainApp(tk.Tk):
         create_menu(self, self.frames, self.show_frame)
 
         self.show_frame(MenuFrame)
-        self.show_frame(TaskManagerApp)
+        self.show_frame(LoginFrame)
 
     def show_frame(self, cont):
         frame = self.frames.get(cont)

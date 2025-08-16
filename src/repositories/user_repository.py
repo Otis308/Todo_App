@@ -1,7 +1,7 @@
 import json
 import os
 from src.config import USERS_FILE
-from src.models.user import User
+from src.models.user_model import User
 class UserRepository:
     def __init__(self):
         os.makedirs(os.path.dirname(USERS_FILE), exist_ok=True)

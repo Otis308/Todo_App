@@ -74,8 +74,9 @@ class LoginFrame(tk.Frame):
         success, message = self.auth_controller.handle_login(email, password)
         if success:
             mb.showinfo("Thành công", message)
-            # Dynamic import để tránh circular import
             from src.views.GUI_Tasks import TaskManagerApp
+            task_frame = self.controller.frames[TaskManagerApp]
+            task_frame.initialize_user(email)
             self.controller.show_frame(TaskManagerApp)
         else:
             mb.showerror("Lỗi", message)

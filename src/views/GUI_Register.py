@@ -22,7 +22,7 @@ class RegisterFrame(tk.Frame):
         main_frame.grid(row=1, column=1)
 
         try:
-            img = Image.open("assets/Logo.jpg").resize((180, 180))
+            img = Image.open("assets/images/Logo.jpg").resize((180, 180))
             self.img_tk = ImageTk.PhotoImage(img)
             logo_label = tk.Label(main_frame, image=self.img_tk, bg='white')
             logo_label.grid(row=0, column=0, pady=10, columnspan=2)

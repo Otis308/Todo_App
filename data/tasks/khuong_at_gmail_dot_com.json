@@ -1,0 +1,24 @@
+[
+    {
+        "task_id": "7ad33281-315e-4667-99cf-cfcb5c957eb9",
+        "title": "dfdf",
+        "description": "",
+        "priority": "Thấp",
+        "status": "Đang chờ",
+        "category": "Work",
+        "created_date": "16/08/2025",
+        "source": "manual",
+        "completed": false
+    },
+    {
+        "task_id": "4beb4d17-28d4-4e26-83ed-ec4cc27afc87",
+        "title": "siuuuu",
+        "description": "",
+        "priority": "Thấp",
+        "status": "Đang tiến hành",
+        "category": "All Tasks",
+        "created_date": "16/08/2025",
+        "source": "manual",
+        "completed": false
+    }
+]

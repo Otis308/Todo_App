@@ -16,5 +16,11 @@
         "email": "nguyenvu123@gmail.com",
         "phone": "0987898765",
         "password": "nguyenvu123@"
+    },
+    {
+        "name": "Khuong",
+        "email": "khuong@gmail.com",
+        "phone": "0931231231",
+        "password": "123456"
     }
 ]
