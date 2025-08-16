@@ -11,7 +11,7 @@ class MainApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("NOTION")
-        self.geometry("1000x780+270+20")
+        self.state('zoomed')
         self.configure(bg='white')
         
         self.current_user_email = None  
