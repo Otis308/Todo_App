@@ -1,5 +1,5 @@
 from tkinter import Menu
-from src.views.GUI_Menu import MenuFrame
+from views.GUI_Menu import MenuFrame
 
 
 def create_menu(self, frames_dict, show_frame_callback):

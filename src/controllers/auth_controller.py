@@ -1,5 +1,5 @@
-from src.services.auth_service import AuthService
-from src.repositories.user_repository import UserRepository
+from services.auth_service import AuthService
+from repositories.user_repository import UserRepository
 
 class AuthController:
     def __init__(self):

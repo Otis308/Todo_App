@@ -1,17 +1,17 @@
 # main.py
 import tkinter as tk
-from src.views.GUI_Login import LoginFrame
-from src.views.GUI_Register import RegisterFrame
-from src.views.GUI_Tasks import TaskManagerApp
-from src.views.GUI_Menu import MenuFrame
-from src.controllers.menu_manager import create_menu
+from views.GUI_Login import LoginFrame
+from views.GUI_Register import RegisterFrame
+from views.GUI_Tasks import TaskManagerApp
+from views.GUI_Menu import MenuFrame
+from controllers.menu_manager import create_menu
 
 
 class MainApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("NOTION")
-        self.geometry("1000x780+270+20")
+        self.state("zoomed")
         self.configure(bg='white')
         
         self.current_user_email = None  
@@ -40,6 +40,11 @@ class MainApp(tk.Tk):
         frame = self.frames.get(cont)
         if frame:
             frame.tkraise()
+
+    def show_login(self):
+        from src.views.GUI_Login import LoginFrame
+        frame = self.frames[LoginFrame]
+        frame.tkraise()
 
 if __name__ == "__main__":
     app = MainApp()

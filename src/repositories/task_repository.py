@@ -1,7 +1,7 @@
 import os
 import json
-from src.models.task_model import Task
-from src.config import TASKS_DIR
+from models.task_model import Task
+from config import TASKS_DIR
 
 class TaskRepository:
     def __init__(self):

@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, messagebox, simpledialog
 from datetime import datetime
-from src.controllers.task_controller import TaskController
+from controllers.task_controller import TaskController
+from tkcalendar import DateEntry
 
 class TaskDialog(tk.Toplevel):
     def __init__(self, parent, task=None, categories=None):
@@ -12,7 +13,7 @@ class TaskDialog(tk.Toplevel):
         self.result = None
 
         self.title("Thêm Task Mới" if not task else "Chỉnh Sửa Task")
-        self.geometry("500x450")
+        self.geometry("650x550")  # Kích thước mong muốn
         self.resizable(False, False)
         self.transient(parent)
         self.grab_set()
@@ -25,9 +26,11 @@ class TaskDialog(tk.Toplevel):
 
     def center_window(self):
         self.update_idletasks()
-        x = (self.winfo_screenwidth() // 2) - (500 // 2)
-        y = (self.winfo_screenheight() // 2) - (450 // 2)
-        self.geometry(f"500x450+{x}+{y}")
+        width = self.winfo_width()
+        height = self.winfo_height()
+        x = (self.winfo_screenwidth() // 2) - (width // 2)
+        y = (self.winfo_screenheight() // 2) - (height // 2)
+        self.geometry(f"{width}x{height}+{x}+{y}")
 
     def create_widgets(self):
         main_frame = tk.Frame(self, bg='white', padx=20, pady=20)
@@ -61,11 +64,24 @@ class TaskDialog(tk.Toplevel):
         self.category_var = tk.StringVar(value="All Tasks")
         ttk.Combobox(main_frame, textvariable=self.category_var, values=list(self.categories), state="readonly").pack(fill=tk.X, pady=(5, 20))
 
+        deadline_frame = tk.Frame(main_frame, bg='white')
+        deadline_frame.pack(fill=tk.X, pady=(0,15))
+        
+
+        tk.Label(deadline_frame, text="Thời gian:", font=("Arial", 11, "bold"), bg='white').grid(row=0, column=0, sticky="w")
+        self.deadline_entry = DateEntry(deadline_frame, width=20, background='darkblue',
+                                        foreground='white', borderwidth=2, date_pattern="dd-mm-yyyy")
+        self.deadline_entry.grid(row=0, column=1, padx=(10, 0), sticky="w")
+
         btn_frame = tk.Frame(main_frame, bg='white')
-        btn_frame.pack(fill=tk.X, pady=(20, 0))
-        tk.Button(btn_frame, text="✅ Tạo", command=self.create_task, bg='#5CB85C', fg='white', font=("Arial", 11, "bold"), padx=20, pady=8).pack(side=tk.RIGHT, padx=(10, 0))
-        tk.Button(btn_frame, text="💾 Lưu", command=self.save_task, bg='#5BC0DE', fg='white', font=("Arial", 11, "bold"), padx=20, pady=8).pack(side=tk.RIGHT, padx=(10, 0))
-        tk.Button(btn_frame, text="❌ Hủy", command=self.destroy, bg='#D9534F', fg='white', font=("Arial", 11, "bold"), padx=20, pady=8).pack(side=tk.RIGHT)
+        btn_frame.pack(fill=tk.X, pady=(30, 0))
+        
+        tk.Button(btn_frame, text="✅ Tạo", command=self.create_task, bg='#5CB85C', fg='black', 
+                 font=("Arial", 8, "bold"), padx=20, pady=8).pack(side=tk.RIGHT, padx=(10, 0))
+        tk.Button(btn_frame, text="💾 Lưu", command=self.save_task, bg='#5BC0DE', fg='black', 
+                 font=("Arial", 8, "bold"), padx=20, pady=8).pack(side=tk.RIGHT, padx=(10, 0))
+        tk.Button(btn_frame, text="❌ Hủy", command=self.destroy, bg='#D9534F', fg='black', 
+                 font=("Arial", 8, "bold"), padx=20, pady=8).pack(side=tk.RIGHT)
 
     def load_task_data(self):
         if self.task:
@@ -86,6 +102,7 @@ class TaskDialog(tk.Toplevel):
             'priority': self.priority_var.get(),
             'status': self.status_var.get(),
             'category': self.category_var.get(),
+            'deadline': self.deadline_entry.get(),  # Thêm dòng này
             'action': 'create'
         }
         self.destroy()
@@ -101,6 +118,7 @@ class TaskDialog(tk.Toplevel):
             'priority': self.priority_var.get(),
             'status': self.status_var.get(),
             'category': self.category_var.get(),
+            'deadline': self.deadline_entry.get(),  # Thêm dòng này
             'action': 'save'
         }
         self.destroy()
@@ -139,7 +157,7 @@ class TaskManagerApp(tk.Frame):
         title_frame = tk.Frame(self, bg='white')
         title_frame.pack(fill=tk.X, padx=20, pady=(20, 10))
         
-        title_label = tk.Label(title_frame, text="🎯TASK MANAGER", 
+        title_label = tk.Label(title_frame, text="🎯QUẢN LÝ CÔNG VIỆC", 
                               font=("Quantico", 40, "bold"), fg="#D52C12", bg='white')
         title_label.pack()
         
@@ -201,7 +219,7 @@ class TaskManagerApp(tk.Frame):
         # Sort (changed from "Độ ưu tiên")
         self.sort_var = tk.StringVar(value="Sắp xếp")
         sort_menu = ttk.Combobox(inner_frame, textvariable=self.sort_var,
-                                values=["Độ ưu tiên", "Ngày tạo", "Trạng thái"],
+                                values=["Độ ưu tiên", "Thời gian", "Trạng thái"],
                                 state="readonly", font=("Arial", 9))
         sort_menu.grid(row=0, column=3, padx=3, sticky="ew")
         sort_menu.bind("<<ComboboxSelected>>", lambda e: self.sort_tasks())
@@ -314,7 +332,7 @@ class TaskManagerApp(tk.Frame):
         frame.grid_rowconfigure(0, weight=1)
 
         # Removed description column, added checkbox column
-        tree = ttk.Treeview(frame, columns=("checkbox", "title", "created_date", "priority", "status"), 
+        tree = ttk.Treeview(frame, columns=("checkbox", "title", "deadline", "priority", "status"), 
                            show="headings", height=20)
         tree.grid(row=0, column=0, sticky="nsew")
         
@@ -322,7 +340,7 @@ class TaskManagerApp(tk.Frame):
         columns_config = [
             ("checkbox", "☑", 40),  # Checkbox column
             ("title", "Tiêu đề", 250),
-            ("created_date", "Ngày tạo", 100),
+            ("deadline", "Thời gian", 100),
             ("priority", "Độ ưu tiên", 100),
             ("status", "Trạng thái", 120)
         ]
@@ -361,18 +379,194 @@ class TaskManagerApp(tk.Frame):
                 break
         
         if task:
-            # Show task details dialog
-            details = f"""Tiêu đề: {task.title}
+            # Create custom dialog window
+            detail_window = tk.Toplevel(self.master)
+            detail_window.title("Chi tiết công việc")
+            detail_window.geometry("500x400")
+            detail_window.configure(bg='white')
+            detail_window.resizable(False, False)
             
-Mô tả: {getattr(task, 'description', 'Không có mô tả')}
-
-Độ ưu tiên: {task.priority}
-Trạng thái: {task.status}
-Thư mục: {getattr(task, 'category', 'All Tasks')}
-Ngày tạo: {task.created_date}"""
+            # Center the window on screen
+            detail_window.update_idletasks()
+            width = detail_window.winfo_width()
+            height = detail_window.winfo_height()
+            x = (detail_window.winfo_screenwidth() // 2) - (width // 2)
+            y = (detail_window.winfo_screenheight() // 2) - (height // 2)
+            detail_window.geometry(f'{width}x{height}+{x}+{y}')
             
-            messagebox.showinfo("Chi tiết Task", details)
-
+            # Title (larger font)
+            title_frame = tk.Frame(detail_window, bg='white')
+            title_frame.pack(fill='x', padx=20, pady=(20, 10))
+            
+            title_label = tk.Label(
+                title_frame, 
+                text=task.title, 
+                font=('Arial', 16, 'bold'), 
+                bg='white',
+                fg='#2c3e50',
+                wraplength=450,
+                justify='left'
+            )
+            title_label.pack(anchor='w')
+            
+            # Separator line
+            separator = tk.Frame(detail_window, height=1, bg='#bdc3c7')
+            separator.pack(fill='x', padx=20, pady=(0, 15))
+            
+            # Task details frame
+            details_frame = tk.Frame(detail_window, bg='white')
+            details_frame.pack(fill='x', padx=20, pady=(0, 15))
+            
+            # Row 1: Priority and Status
+            row1_frame = tk.Frame(details_frame, bg='white')
+            row1_frame.pack(fill='x', pady=(0, 10))
+            
+            # Priority (left side)
+            priority_frame = tk.Frame(row1_frame, bg='white')
+            priority_frame.pack(side='left', fill='x', expand=True, padx=(0, 10))
+            
+            priority_label = tk.Label(
+                priority_frame,
+                text="🔥 Độ ưu tiên:",
+                font=('Arial', 12, 'bold'),
+                bg='white',
+                fg='#34495e'
+            )
+            priority_label.pack(anchor='w')
+            
+            priority_value = tk.Label(
+                priority_frame,
+                text=task.priority,
+                font=('Arial', 12),
+                bg='white',
+                fg='#7f8c8d',
+                padx=20
+            )
+            priority_value.pack(anchor='w')
+            
+            # Status (right side)
+            status_frame = tk.Frame(row1_frame, bg='white')
+            status_frame.pack(side='right', fill='x', expand=True, padx=(10, 0))
+            
+            status_label = tk.Label(
+                status_frame,
+                text="📊 Trạng thái:",
+                font=('Arial', 12, 'bold'),
+                bg='white',
+                fg='#34495e'
+            )
+            status_label.pack(anchor='w')
+            
+            status_value = tk.Label(
+                status_frame,
+                text=task.status,
+                font=('Arial', 12),
+                bg='white',
+                fg='#7f8c8d',
+                padx=20
+            )
+            status_value.pack(anchor='w')
+            
+            # Row 2: Category and Created Date
+            row2_frame = tk.Frame(details_frame, bg='white')
+            row2_frame.pack(fill='x', pady=(0, 10))
+            
+            # Category (left side)
+            category_frame = tk.Frame(row2_frame, bg='white')
+            category_frame.pack(side='left', fill='x', expand=True, padx=(0, 10))
+            
+            category_label = tk.Label(
+                category_frame,
+                text="📁 Thư mục:",
+                font=('Arial', 12, 'bold'),
+                bg='white',
+                fg='#34495e'
+            )
+            category_label.pack(anchor='w')
+            
+            category_value = tk.Label(
+                category_frame,
+                text=getattr(task, 'category', 'All Tasks'),
+                font=('Arial', 12),
+                bg='white',
+                fg='#7f8c8d',
+                padx=20
+            )
+            category_value.pack(anchor='w')
+            
+            # Created Date (right side)
+            date_frame = tk.Frame(row2_frame, bg='white')
+            date_frame.pack(side='right', fill='x', expand=True, padx=(10, 0))
+            
+            date_label = tk.Label(
+                date_frame,
+                text="📅 Ngày hết hạn:",
+                font=('Arial', 12, 'bold'),
+                bg='white',
+                fg='#34495e'
+            )
+            date_label.pack(anchor='w')
+            
+            date_value = tk.Label(
+                date_frame,
+                text=task.deadline,
+                font=('Arial', 12),
+                bg='white',
+                fg='#7f8c8d',
+                padx=20
+            )
+            date_value.pack(anchor='w')
+            
+            # Description section (at the bottom)
+            desc_label = tk.Label(
+                detail_window,
+                text="📝 Mô tả:",
+                font=('Arial', 12, 'bold'),
+                bg='white',
+                fg='#34495e'
+            )
+            desc_label.pack(anchor='w', padx=20, pady=(10, 5))
+        
+            # Description text box with frame
+            desc_frame = tk.Frame(detail_window, bg='#ecf0f1', relief='solid', bd=1)
+            desc_frame.pack(fill='both', expand=True, padx=20, pady=(0, 20))
+            
+            desc_text = tk.Text(
+                desc_frame,
+                font=('Arial', 12),
+                bg='#ecf0f1',
+                fg='#2c3e50',
+                relief='flat',
+                wrap='word',
+                padx=10,
+                pady=10,
+                state='normal'
+            )
+            desc_text.pack(fill='both', expand=True, padx=5, pady=5)
+            
+            # Insert description and make read-only
+            description = getattr(task, 'description', 'Không có mô tả')
+            desc_text.insert('1.0', description)
+            desc_text.config(state='disabled')
+            
+            # Close button
+            close_btn = tk.Button(
+                detail_window,
+                text="Đóng",
+                font=('Arial', 12),
+                bg='#3498db',
+                fg='white',
+                relief='flat',
+                padx=20,
+                pady=5,
+                command=detail_window.destroy
+            )
+            close_btn.pack(pady=(0, 20))
+            
+            # Make window modal
+            detail_window.transient(self.master)
+            detail_window.grab_set()
+            detail_window.focus_set()
     # =================== Sidebar Functions ===================
     def populate_categories(self):
         self.category_listbox.delete(0, tk.END)
@@ -414,7 +608,6 @@ Ngày tạo: {task.created_date}"""
                 getattr(t, 'task_id', None) in assigned_task_ids
             ]
         
-        self.apply_filters_and_search()
 
     def add_category(self):
         name = simpledialog.askstring("Thêm thư mục mới", "Tên thư mục:")
@@ -510,19 +703,50 @@ Ngày tạo: {task.created_date}"""
     def refresh_view(self):
         if not self.task_controller:
             return
-        all_tasks = self.task_controller.list_tasks() or []
-        # Lọc task thủ công
-        self.filtered_manual_tasks = [t for t in all_tasks if getattr(t, 'source', 'manual') == 'manual']
-        self.filter_tasks_by_category()
+
+        # Reset combobox về mặc định
+        if hasattr(self, "sort_var"):
+            self.sort_var.set("Sắp xếp")
+        if hasattr(self, "filter_var"):
+            self.filter_var.set("Lọc")  
+        tasks = self.task_controller.list_tasks() or []
+
+        if self.current_category != "All Tasks":
+            assigned_ids = self.categories.get(self.current_category, {}).get("tasks", [])
+            tasks = [t for t in tasks if getattr(t, 'source', 'manual') == 'manual' 
+                    and getattr(t, 'task_id', None) in assigned_ids]
+        else:
+            tasks = [t for t in tasks if getattr(t, 'source', 'manual') == 'manual']
+
+        status = self.filter_var.get()
+        if status not in ("Lọc", "Tất cả"):
+            tasks = [t for t in tasks if t.status == status]
+
+        if self.search_text:
+            s = self.search_text.lower()
+            tasks = [t for t in tasks if s in t.title.lower() or s in getattr(t, 'description', '').lower()]
+
+        sort_key = {
+            "Ngày tạo ↑":  lambda t: getattr(t, 'created_date', None) or "",
+            "Ngày tạo ↓":  lambda t: getattr(t, 'created_date', None) or "",
+            "Tiêu đề A-Z": lambda t: t.title.lower(),
+            "Tiêu đề Z-A": lambda t: t.title.lower(),
+        }
+        option = self.sort_var.get() if hasattr(self, "sort_var") else None
+        if option in sort_key:
+            tasks.sort(key=sort_key[option], reverse=option in ("Ngày tạo ↓", "Tiêu đề Z-A"))
+
+        self.filtered_manual_tasks = tasks
         self.populate_categories()
+        self.populate_trees()
+        self.update_status_display()
 
     def populate_trees(self):
         self.tree_manual.delete(*self.tree_manual.get_children())
         for t in self.filtered_manual_tasks:
-            # Add checkbox symbol based on completion status
             checkbox = "☑" if getattr(t, 'completed', False) else "☐"
             self.tree_manual.insert("", "end", tags=(t.task_id,), 
-                                   values=(checkbox, t.title, t.created_date, t.priority, t.status))
+                                   values=(checkbox, t.title, t.deadline, t.priority, t.status))
 
     def update_status_display(self):
         total_tasks = len(self.task_controller.list_tasks()) if self.task_controller else 0
@@ -540,7 +764,8 @@ Ngày tạo: {task.created_date}"""
                 description=dialog.result['description'],
                 priority=dialog.result['priority'],
                 status=dialog.result['status'],
-                category=dialog.result['category']
+                category=dialog.result['category'],
+                deadline=dialog.result['deadline'],
             )
             category = dialog.result['category']
             if category != "All Tasks" and category in self.categories:
@@ -555,29 +780,26 @@ Ngày tạo: {task.created_date}"""
         if not selected:
             messagebox.showwarning("Cảnh báo", "Vui lòng chọn task để sửa!")
             return
-        
-        # Get task ID from tree tags
+
         task_item = selected[0]
         task_tags = self.tree_manual.item(task_item, "tags")
         if not task_tags:
             return
-            
+
         task_id = task_tags[0]
-        
-        # Find the task
         task = None
         for t in self.task_controller.list_tasks():
             if t.task_id == task_id:
                 task = t
                 break
-        
+
         if not task:
             messagebox.showerror("Lỗi", "Không tìm thấy task!")
             return
-        
+
         dialog = TaskDialog(self, task=task, categories=list(self.categories.keys()))
         self.wait_window(dialog)
-        
+
         if dialog.result:
             old_category = getattr(task, 'category', 'All Tasks')
             new_category = dialog.result['category']
@@ -587,7 +809,8 @@ Ngày tạo: {task.created_date}"""
                 description=dialog.result['description'],
                 priority=dialog.result['priority'],
                 status=dialog.result['status'],
-                category=new_category
+                category=new_category,
+                deadline=dialog.result['deadline']  # Thêm dòng này
             )
             if old_category != new_category:
                 if old_category in self.categories and task_id in self.categories[old_category].get("tasks", []):
@@ -624,76 +847,97 @@ Ngày tạo: {task.created_date}"""
             messagebox.showinfo("Thành công", f"Đã xóa {len(selected)} task(s)!")
 
     def sort_tasks(self):
-        if not self.filtered_manual_tasks:
-            return
-        
-        sort_by = self.sort_var.get()
-        
-        if sort_by == "Độ ưu tiên":
-            priority_order = {"Cao": 0, "Trung bình": 1, "Thấp": 2}
-            self.filtered_manual_tasks.sort(key=lambda t: priority_order.get(t.priority, 3))
-        elif sort_by == "Ngày tạo":
-            self.filtered_manual_tasks.sort(key=lambda t: datetime.strptime(t.created_date, "%d/%m/%Y"), reverse=True)
-        elif sort_by == "Tên":
-            self.filtered_manual_tasks.sort(key=lambda t: t.title.lower())
-        elif sort_by == "Trạng thái":
-            status_order = {"Đang tiến hành": 0, "Đang chờ": 1, "Hoàn thành": 2}
-            self.filtered_manual_tasks.sort(key=lambda t: status_order.get(t.status, 3))
-        
-        self.populate_trees()
-
-    def filter_tasks(self):
-        self.apply_filters_and_search()
-
-    def apply_filters_and_search(self):
         if not self.task_controller:
             return
-        
-        # Start with category filtered tasks
-        if self.current_category == "All Tasks":
-            tasks = [t for t in self.task_controller.list_tasks() if getattr(t, 'source', 'manual') == 'manual']
-        else:
-            assigned_task_ids = self.categories[self.current_category].get("tasks", [])
-            tasks = [
-                t for t in self.task_controller.list_tasks() 
-                if getattr(t, 'source', 'manual') == 'manual' and 
-                getattr(t, 'task_id', None) in assigned_task_ids
-            ]
-        
-        # Apply status filter
+
+        sort_by = self.sort_var.get()
+        if sort_by == "Sắp xếp":
+            return
+
+        all_manual_tasks = [t for t in self.task_controller.list_tasks()
+                            if getattr(t, 'source', 'manual') == 'manual']
+
+        if not all_manual_tasks:
+            return
+
+        if sort_by == "Độ ưu tiên":
+            # Cao > Trung bình > Thấp
+            priority_order = {"Cao": 0, "Trung bình": 1, "Thấp": 2}
+            all_manual_tasks.sort(key=lambda t: priority_order.get(t.priority, 3))
+        elif sort_by == "Thời gian":
+            # Ngày mới nhất lên đầu (giảm dần)
+            def parse_date(date_str):
+                try:
+                    return datetime.strptime(date_str, "%d-%m-%Y")
+                except Exception:
+                    return datetime.min
+            all_manual_tasks.sort(key=lambda t: parse_date(getattr(t, 'deadline', '01-01-1900')), reverse=True)
+        elif sort_by == "Trạng thái":
+            # Đang tiến hành > Đang chờ > Hoàn thành
+            status_order = {"Đang tiến hành": 0, "Đang chờ": 1, "Hoàn thành": 2}
+            all_manual_tasks.sort(key=lambda t: status_order.get(t.status, 3))
+
+        self.filtered_manual_tasks = all_manual_tasks
+        self.current_category = "All Tasks"
+        self.populate_trees()
+        self.update_status_display()
+
+        if self.category_listbox.size() > 0:
+            self.category_listbox.selection_clear(0, tk.END)
+            self.category_listbox.selection_set(0)
+            self.category_info_label.config(
+                text=f"📊 All Tasks: {len(all_manual_tasks)} tasks (đã sắp xếp theo {sort_by})"
+            )
+    def filter_tasks(self):
+        if not self.task_controller:
+            return
         status_filter = self.filter_var.get()
         if status_filter != "Lọc" and status_filter != "Tất cả":
-            tasks = [t for t in tasks if t.status == status_filter]
-        
-        # Apply search filter
+            tasks = [t for t in self.task_controller.list_tasks() if t.status == status_filter]
+        else:
+            if self.current_category == "All Tasks":
+                tasks = [t for t in self.task_controller.list_tasks() if getattr(t, 'source', 'manual') == 'manual']
+            else:
+                assigned_task_ids = self.categories[self.current_category].get("tasks", [])
+                tasks = [
+                    t for t in self.task_controller.list_tasks()
+                    if getattr(t, 'source', 'manual') == 'manual' and 
+                    getattr(t, 'task_id', None) in assigned_task_ids
+                ]
+
         if self.search_text:
             search_lower = self.search_text.lower()
             tasks = [t for t in tasks if 
                     search_lower in t.title.lower() or 
                     search_lower in getattr(t, 'description', '').lower()]
-        
+
         self.filtered_manual_tasks = tasks
         self.populate_trees()
         self.update_status_display()
 
     def on_search_change(self, event):
         self.search_text = self.search_entry.get().strip()
-        if len(self.search_text) >= 2 or self.search_text == "":
-            self.apply_filters_and_search()
+        self.filter_tasks()
 
     def search_tasks(self):
         self.search_text = self.search_entry.get().strip()
-        self.apply_filters_and_search()
+        self.filter_tasks()
 
     # =================== Logout ===================
     def logout(self):
-        if messagebox.askyesno("Đăng xuất", f"Bạn có chắc chắn muốn đăng xuất {self.current_user_email}?"):
+        from views.GUI_Login import LoginFrame
+        email = self.current_user_email  # Lấy email trực tiếp từ frame này
+        if messagebox.askyesno("Đăng xuất", f"Bạn có chắc chắn muốn đăng xuất {email}?"):
+            # Xóa dữ liệu user
             self.controller.current_user_email = None
-            if self.task_controller:
-                self.task_controller.tasks.clear()
+            self.current_user_email = None
+
+            # Xóa dữ liệu hiển thị trong GUI
             self.filtered_manual_tasks.clear()
             self.tree_manual.delete(*self.tree_manual.get_children())
             self.user_label.config(text="")
             self.search_entry.delete(0, tk.END)
-            if hasattr(self.controller, 'show_login'):
-                self.controller.show_login()
+
+            # Quay về login và xóa dữ liệu nhập (email, mật khẩu)
+            self.controller.frames[LoginFrame].clear_entries()
+            self.controller.show_frame(LoginFrame)

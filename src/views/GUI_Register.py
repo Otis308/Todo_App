@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import font
 from PIL import Image, ImageTk
 import tkinter.messagebox as mb
-from src.controllers.auth_controller import AuthController
+from controllers.auth_controller import AuthController
 
 class RegisterFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -78,5 +78,5 @@ class RegisterFrame(tk.Frame):
             mb.showerror("Lỗi", message)
 
     def _go_login(self):
-        from src.views.GUI_Login import LoginFrame
+        from views.GUI_Login import LoginFrame
         self.controller.show_frame(LoginFrame)

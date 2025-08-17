@@ -1,24 +1,100 @@
 [
     {
-        "task_id": "7ad33281-315e-4667-99cf-cfcb5c957eb9",
-        "title": "dfdf",
+        "task_id": "41bb8c1a-dbb8-4538-b6c9-08c207a76b93",
+        "title": "Go Home",
         "description": "",
         "priority": "Thấp",
         "status": "Đang chờ",
-        "category": "Work",
-        "created_date": "16/08/2025",
-        "source": "manual",
+        "category": "All Tasks",
+        "created_date": "17/08/2025",
+        "source": [
+            "manual"
+        ],
+        "deadline": "",
         "completed": false
     },
     {
-        "task_id": "4beb4d17-28d4-4e26-83ed-ec4cc27afc87",
-        "title": "siuuuu",
+        "task_id": "b1c122c7-d5ef-4055-983f-e39cc63e4170",
+        "title": "Học",
         "description": "",
         "priority": "Thấp",
-        "status": "Đang tiến hành",
+        "status": "Đang chờ",
         "category": "All Tasks",
-        "created_date": "16/08/2025",
+        "created_date": "17/08/2025",
         "source": "manual",
+        "deadline": "18-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "2b7fca2d-030e-4c88-a034-c48ba40ffdb9",
+        "title": "Ăn",
+        "description": "Pizza",
+        "priority": "Thấp",
+        "status": "Đang chờ",
+        "category": "All Tasks",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "17-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "78a1311b-7ef8-4f52-a1fe-6d4fb559f271",
+        "title": "Python 2",
+        "description": "",
+        "priority": "Trung bình",
+        "status": "Đang chờ",
+        "category": "Learning",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "19-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "b6a0624a-aca3-4e35-b362-504c73d33706",
+        "title": "OOP",
+        "description": "",
+        "priority": "Thấp",
+        "status": "Đang chờ",
+        "category": "All Tasks",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "17-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "b7a7d88d-01d1-4fe5-8b68-8a5541dff090",
+        "title": "AI",
+        "description": "Thuật toán AI",
+        "priority": "Cao",
+        "status": "Đang tiến hành",
+        "category": "Work",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "17-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "77cc9dea-6aa6-451c-8762-cf081c5ba763",
+        "title": "Đạp xe",
+        "description": "",
+        "priority": "Thấp",
+        "status": "Hoàn thành",
+        "category": "Personal",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "16-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "2cf0be12-9f9b-4f15-b7f8-9b5b70d3fd14",
+        "title": "Them",
+        "description": "",
+        "priority": "Thấp",
+        "status": "Đang chờ",
+        "category": "All Tasks",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "27-08-2025",
         "completed": false
     }
 ]

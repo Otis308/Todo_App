@@ -1,5 +1,5 @@
 import re
-from src.models.user_model import User
+from models.user_model import User
 
 class AuthService:
     EMAIL_PATTERN = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -7,7 +7,6 @@ class AuthService:
 
     def __init__(self, user_repo):
         self.user_repo = user_repo
-
 
 
     def login(self, email, password):

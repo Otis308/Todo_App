@@ -1,5 +1,5 @@
-from src.services.task_service import TaskService
-from src.repositories.task_repository import TaskRepository
+from services.task_service import TaskService
+from repositories.task_repository import TaskRepository
 
 class TaskController:
     def __init__(self, user_email):

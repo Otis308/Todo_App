@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import font
 from PIL import Image, ImageTk
 import tkinter.messagebox as mb
-from src.controllers.auth_controller import AuthController
+from controllers.auth_controller import AuthController
 
 class LoginFrame(tk.Frame):
     def __init__(self, parent, controller):
@@ -24,7 +24,7 @@ class LoginFrame(tk.Frame):
 
         # Logo
         try:
-            img = Image.open("assets/Logo.jpg").resize((180, 180))
+            img = Image.open("assets/images/Logo.jpg").resize((180, 180))
             self.img_tk = ImageTk.PhotoImage(img)
             logo_label = tk.Label(main_frame, image=self.img_tk, bg='white')
             logo_label.grid(row=0, column=0, pady=10, columnspan=2)
@@ -74,7 +74,7 @@ class LoginFrame(tk.Frame):
         success, message = self.auth_controller.handle_login(email, password)
         if success:
             mb.showinfo("Thành công", message)
-            from src.views.GUI_Tasks import TaskManagerApp
+            from views.GUI_Tasks import TaskManagerApp
             task_frame = self.controller.frames[TaskManagerApp]
             task_frame.initialize_user(email)
             self.controller.show_frame(TaskManagerApp)
@@ -82,5 +82,10 @@ class LoginFrame(tk.Frame):
             mb.showerror("Lỗi", message)
 
     def _go_register(self):
-        from src.views.GUI_Register import RegisterFrame
+        from views.GUI_Register import RegisterFrame
         self.controller.show_frame(RegisterFrame)
+
+    def clear_entries(self):
+        self.email_entry.delete(0, tk.END)
+        self.password_entry.delete(0, tk.END)
+        
