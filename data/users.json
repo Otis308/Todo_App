@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Nguyên Vũ",
+    "phonenumber": "0944055147",
+    "email": "Nguyenvu3025@gmail.com",
+    "password": "Nguyenvu123@"
+  },
+  {
+    "name": "Nguyên",
+    "phonenumber": "07854985647",
+    "email": "Nguyen123@gmail.com",
+    "password": "Nguyen123@"
+  },
+  {
+    "name": "nguyen vu",
+    "email": "nguyenvu123@gmail.com",
+    "phone": "0987898765",
+    "password": "nguyenvu123@"
+  },
+  {
+    "name": "Khuong",
+    "email": "khuong@gmail.com",
+    "phone": "0931231231",
+    "password": "123456"
+  },
+  {
+    "name": "Vũ",
+    "email": "nguyenvu@gmail.com",
+    "phone": "0933333333",
+    "password": "123"
+  }
+]

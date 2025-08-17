@@ -1,0 +1,38 @@
+[
+    {
+        "task_id": "dd373f57-c7df-4a56-99c5-b1e5dced499d",
+        "title": "Học tiếng Pháp",
+        "description": "",
+        "priority": "Cao",
+        "status": "Đang tiến hành",
+        "category": "Personal",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "17-08-2025",
+        "completed": false
+    },
+    {
+        "task_id": "1f6c2049-17f8-4cd1-98e7-4d36c20acb4c",
+        "title": "Lập trình Web",
+        "description": "Hoàn thành bài tập",
+        "priority": "Cao",
+        "status": "Đang chờ",
+        "category": "Projects",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "01-10-2025",
+        "completed": false
+    },
+    {
+        "task_id": "0a113267-02e0-4c37-9340-c01618daf067",
+        "title": "Mua IP 15PRM",
+        "description": "HoangHaMobile",
+        "priority": "Thấp",
+        "status": "Hoàn thành",
+        "category": "Shopping",
+        "created_date": "17/08/2025",
+        "source": "manual",
+        "deadline": "16-08-2025",
+        "completed": false
+    }
+]
